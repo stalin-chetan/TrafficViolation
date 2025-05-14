@@ -5,7 +5,7 @@ import 'package:trafficapp/features/auth/presentation/widgets/auth_button_gradie
 import 'package:trafficapp/features/auth/presentation/widgets/auth_form.dart';
 
 class SignUpPage extends StatefulWidget {
-    static route() =>  MaterialPageRoute(builder: (context)=> SignUpPage());
+  static route() => MaterialPageRoute(builder: (context) => SignUpPage());
 
   const SignUpPage({super.key});
 
@@ -14,11 +14,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final licenseController = TextEditingController();
-final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     nameController.dispose();
@@ -44,17 +44,19 @@ final formKey = GlobalKey<FormState>();
                 style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 30),
-              AuthField(hintText: 'Name'),
+              AuthField(hintText: 'First Name'),
+              SizedBox(height: 15),
+              AuthField(hintText: 'Last Name'),
               SizedBox(height: 15),
               AuthField(hintText: 'Email'),
               SizedBox(height: 15),
-              AuthField(hintText: 'Password', isObsecureText: true,),
+              AuthField(hintText: 'Password', isObsecureText: true),
               SizedBox(height: 15),
               AuthField(hintText: 'License Number'),
               SizedBox(height: 30),
               AuthButtonGradient(),
               SizedBox(height: 30),
-          
+
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(LoginPage.route());
