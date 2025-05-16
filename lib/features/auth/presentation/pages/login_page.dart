@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trafficapp/core/theme/app_pallete.dart';
+import 'package:trafficapp/features/auth/presentation/pages/notification_page.dart';
 import 'package:trafficapp/features/auth/presentation/pages/signup_page.dart';
 import 'package:trafficapp/features/auth/presentation/widgets/auth_button_gradient.dart';
 import 'package:trafficapp/features/auth/presentation/widgets/auth_form.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   static route() => MaterialPageRoute(builder: (context) => LoginPage());
@@ -13,15 +17,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
+  final licenseController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    emailController.dispose();
+    licenseController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loginUser() async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:8000/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'user_licensenumber': licenseController.text,
+        'user_password': passwordController.text,
+      }),
+    );
+    if (response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Welcome ${data['user_fname']}!')));
+      Navigator.of(context).push(NotificationPage.route());
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed: ${response.body}')));
+    }
   }
 
   @override
@@ -39,11 +65,25 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 30),
-              AuthField(hintText: 'Email'),
+              AuthField(
+                hintText: 'License Number',
+                controller: licenseController,
+              ),
               SizedBox(height: 15),
-              AuthField(hintText: 'Password', isObsecureText: true),
+              AuthField(
+                hintText: 'Password',
+                isObsecureText: true,
+                controller: passwordController,
+              ),
               SizedBox(height: 15),
-              AuthButtonGradient(),
+              AuthButtonGradient(
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    _loginUser();
+                  }
+                },
+              ),
+
               SizedBox(height: 15),
               GestureDetector(
                 onTap: () {

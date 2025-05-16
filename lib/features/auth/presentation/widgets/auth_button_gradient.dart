@@ -2,37 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:trafficapp/core/theme/app_pallete.dart';
 
 class AuthButtonGradient extends StatelessWidget {
-  const AuthButtonGradient({super.key});
+  final VoidCallback onTap;
+  final String text;
+
+  const AuthButtonGradient({
+    super.key,
+    required this.onTap,
+    this.text = 'Sign Up',
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(7),
-        gradient: LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-          colors:
-        [
-          AppPallete.gradient1,
-          AppPallete.gradient2,
-        ])
+    return GestureDetector(
+      onTap: onTap, // <- This must be connected!
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [AppPallete.gradient1, AppPallete.gradient2],
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      child: ElevatedButton(
-       style: ElevatedButton.styleFrom(
-        fixedSize: const Size(395, 55),
-        backgroundColor: AppPallete.transparentColor,
-        shadowColor: AppPallete.transparentColor,
-       ),
-      
-       
-        onPressed: (){} ,
-       child: const Text('Sign Up',
-       style: TextStyle(
-        fontSize: 17,
-        fontWeight: FontWeight.w600
-       ),
-       )),
     );
   }
 }
