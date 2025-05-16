@@ -3,7 +3,7 @@ import 'package:web_socket_channel/io.dart';
 
 class NotificationPage extends StatelessWidget {
   final channel = IOWebSocketChannel.connect(
-    Uri.parse('ws://192.168.1.69:8000/ws/notifications/99999999999999'),
+    Uri.parse('ws://192.168.1.69:8000/ws/notifications/03-06-01398979'),
   );
   static route() => MaterialPageRoute(builder: (context) => NotificationPage());
 
