@@ -11,16 +11,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.2.2
   http: ^1.4.0
   web_socket_channel: ^3.0.3
 
   cupertino_icons: ^1.0.8
 
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "D:/Other files/Project/flutter/project/TrafficViolation/lib/assets/logo.png"

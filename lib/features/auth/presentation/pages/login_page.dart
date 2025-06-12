@@ -30,19 +30,22 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _loginUser() async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/login'),
+      Uri.parse('http://10.0.2.2:8000/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'user_licensenumber': licenseController.text,
         'user_password': passwordController.text,
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 201 || response.statusCode == 200) {
       final data = jsonDecode(response.body);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Welcome ${data['user_fname']}!')));
-      Navigator.of(context).push(NotificationPage.route());
+      Navigator.of(
+        context
+      ).push(MaterialPageRoute(
+    builder: (context) => NotificationPage(licenseNumber: licenseController.text),));
     } else {
       ScaffoldMessenger.of(
         context,
